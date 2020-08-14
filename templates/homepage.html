@@ -32,7 +32,14 @@
             bottom: 1%;
             left: 1%;
             pointer-events: none;
-            border-bottom: 2px solid red;
+        }
+        #load{
+            position: absolute;
+            bottom: 1%;
+            left: 1%;
+            width: 8.3%;
+            height: 20px;
+            background-color: rgba(255, 161, 20, 0.35);
         }
         .map {
             position: absolute;
@@ -63,6 +70,8 @@
         <div id="Clock" class="clock" onload="showTime()"></div>
         <div id="Date" class="date" onload="showDate()"></div>
     </div>
+
+    <div id="load"></div>
     <div id="timestamp"></div>
 
     <script>
@@ -105,107 +114,110 @@
     <script>
         var map = L.map('map', { zoomControl: false }).setView([55.81370, 37.36522], 7);
         var gl = L.mapboxGL({
-                style: 'https://api.maptiler.com/maps/e9344f37-0d92-4f4b-99de-5d7a038c5620/style.json?key=auHeH62VVMXfIVFOMESZ',
-                zoomControl: false
-            }).addTo(map);
+                    style: 'https://api.maptiler.com/maps/e9344f37-0d92-4f4b-99de-5d7a038c5620/style.json?key=auHeH62VVMXfIVFOMESZ',
+                    zoomControl: false
+                }).addTo(map);
+    </script>
+    <script>
+        function rainLayerUpdater() {
+            var timestamps = [];
+            var radarLayers = [];
 
-        var timestamps = [];
-        var radarLayers = [];
+            var animationPosition = 0;
+            var animationTimer = false;
 
-        var animationPosition = 0;
-        var animationTimer = false;
-
-        var apiRequest = new XMLHttpRequest();
-        apiRequest.open("GET", "https://api.rainviewer.com/public/maps.json", true);
-        apiRequest.onload = function(e) {
-            timestamps = JSON.parse(apiRequest.response);
-            showFrame(-1);
-            playStop();
-        };
-        apiRequest.send();
-
-        function addLayer(ts) {
-            if (!radarLayers[ts]) {
-                radarLayers[ts] = new L.TileLayer('https://tilecache.rainviewer.com/v2/radar/' + ts + '/256/{z}/{x}/{y}/8/1_1.png', {
-                    tileSize: 256,
-                    opacity: 0.001,
-                    zIndex: ts
-                });
+            var apiRequest = new XMLHttpRequest();
+            apiRequest.open("GET", "https://api.rainviewer.com/public/maps.json", true);
+            apiRequest.onload = function(e) {
+                timestamps = JSON.parse(apiRequest.response);
+                showFrame(-1);
+                playStop();
+            };
+            apiRequest.send();
+            setTimeout(rainLayerUpdater, 1000*60*10);
+            function addLayer(ts) {
+                if (!radarLayers[ts]) {
+                    radarLayers[ts] = new L.TileLayer('https://tilecache.rainviewer.com/v2/radar/' + ts + '/256/{z}/{x}/{y}/8/1_1.png', {
+                        tileSize: 256,
+                        opacity: 0.001,
+                        zIndex: ts
+                    });
+                }
+                if (!map.hasLayer(radarLayers[ts])) {
+                    map.addLayer(radarLayers[ts]);
+                }
             }
-            if (!map.hasLayer(radarLayers[ts])) {
-                map.addLayer(radarLayers[ts]);
+
+            function changeRadarPosition(position, preloadOnly) {
+                while (position >= timestamps.length) {
+                    position -= timestamps.length;
+                }
+                while (position < 0) {
+                    position += timestamps.length;
+                }
+
+                var currentTimestamp = timestamps[animationPosition];
+                var nextTimestamp = timestamps[position];
+
+                addLayer(nextTimestamp);
+
+                if (preloadOnly) {
+                    return;
+                }
+
+                animationPosition = position;
+
+                if (radarLayers[currentTimestamp]) {
+                    radarLayers[currentTimestamp].setOpacity(0);
+                }
+                radarLayers[nextTimestamp].setOpacity(100);
+                var logDate = new Date(nextTimestamp*1000);
+                var h = logDate.getHours();
+                var m = logDate.getMinutes();
+
+                h = (h < 10) ? "0" + h : h;
+                m = (m < 10) ? "0" + m : m;
+                logTime = h + ":" + m;
+                document.getElementById("timestamp").innerHTML = logTime;
+            }
+
+            function showFrame(nextPosition) {
+                var preloadingDirection = nextPosition - animationPosition > 0 ? 1 : -1;
+                changeRadarPosition(nextPosition);
+                changeRadarPosition(nextPosition + preloadingDirection, true);
+            }
+
+            function stop() {
+                if (animationTimer) {
+                    clearTimeout(animationTimer);
+                    animationTimer = false;
+                    return true;
+                }
+                return false;
+            }
+
+            function play() {
+                showFrame(animationPosition + 1);
+                var elem = document.getElementById("load");
+
+                if(animationPosition === 0){
+                    elem.style.width = '8.3%';
+                }
+                p = (animationPosition * 8.3) + 8.3;
+                elem.style.width = p + '%';
+                console.log(p);
+
+
+                animationTimer = setTimeout(play, 500);
+            }
+
+            function playStop() {
+                if (!stop()) {
+                    play();
+                }
             }
         }
-
-        function changeRadarPosition(position, preloadOnly) {
-            while (position >= timestamps.length) {
-                position -= timestamps.length;
-            }
-            while (position < 0) {
-                position += timestamps.length;
-            }
-
-            var currentTimestamp = timestamps[animationPosition];
-            var nextTimestamp = timestamps[position];
-
-            addLayer(nextTimestamp);
-
-            if (preloadOnly) {
-                return;
-            }
-
-            animationPosition = position;
-
-            if (radarLayers[currentTimestamp]) {
-                radarLayers[currentTimestamp].setOpacity(0);
-            }
-            radarLayers[nextTimestamp].setOpacity(100);
-            var logDate = new Date(nextTimestamp*1000);
-            var h = logDate.getHours();
-            var m = logDate.getMinutes();
-
-            h = (h < 10) ? "0" + h : h;
-            m = (m < 10) ? "0" + m : m;
-            logTime = h + ":" + m;
-            document.getElementById("timestamp").innerHTML = logTime;
-        }
-
-        function showFrame(nextPosition) {
-            var preloadingDirection = nextPosition - animationPosition > 0 ? 1 : -1;
-
-            changeRadarPosition(nextPosition);
-            changeRadarPosition(nextPosition + preloadingDirection, true);
-        }
-
-        function stop() {
-            if (animationTimer) {
-                clearTimeout(animationTimer);
-                animationTimer = false;
-                return true;
-            }
-            return false;
-        }
-
-        function play() {
-            showFrame(animationPosition + 1);
-            animationTimer = setTimeout(play, 500);
-        }
-
-        function playStop() {
-            if (!stop()) {
-                play();
-            }
-        }
-        function loader() {
-            let start = timestamps[0];
-            let timer = setInterval(function() {
-                let timePassed = Date.now() - start;
-
-                train.style.left = timePassed / 5 + 'px';
-
-                if (timePassed > 2000) clearInterval(timer);
-            }, 20);
-        }
+        rainLayerUpdater();
     </script>
 </body>
 </html>

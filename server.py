@@ -1,18 +1,17 @@
+import asyncio
+import logging
+
 import aiohttp_jinja2
 import jinja2
 from aiohttp import web
-import asyncio
-import logging
+
 from views import homepage
 
 
 async def initial_app():
     init_app = web.Application()
-    aiohttp_jinja2.setup(
-        init_app,
-        loader=jinja2.FileSystemLoader('templates')
-    )
-    init_app.router.add_get('/', homepage)
+    aiohttp_jinja2.setup(init_app, loader=jinja2.FileSystemLoader("templates"))
+    init_app.router.add_get("/", homepage)
     return init_app
 
 
