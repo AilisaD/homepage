@@ -26,12 +26,13 @@
         .leaflet-pane{
             position: static ;
         }
-        .timestamp{
+        #timestamp{
             text-align:center;
             position: absolute;
             bottom: 1%;
             left: 1%;
             pointer-events: none;
+            border-bottom: 2px solid red;
         }
         .map {
             position: absolute;
@@ -62,7 +63,7 @@
         <div id="Clock" class="clock" onload="showTime()"></div>
         <div id="Date" class="date" onload="showDate()"></div>
     </div>
-    <div id="timestamp" class="timestamp"></div>
+    <div id="timestamp"></div>
 
     <script>
         function showTime(){
@@ -194,6 +195,16 @@
             if (!stop()) {
                 play();
             }
+        }
+        function loader() {
+            let start = timestamps[0];
+            let timer = setInterval(function() {
+                let timePassed = Date.now() - start;
+
+                train.style.left = timePassed / 5 + 'px';
+
+                if (timePassed > 2000) clearInterval(timer);
+            }, 20);
         }
     </script>
 </body>

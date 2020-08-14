@@ -3,7 +3,7 @@ import jinja2
 from aiohttp import web
 import asyncio
 import logging
-from views import homepage, weather
+from views import homepage
 
 
 async def initial_app():
@@ -13,7 +13,6 @@ async def initial_app():
         loader=jinja2.FileSystemLoader('templates')
     )
     init_app.router.add_get('/', homepage)
-    init_app.router.add_get('/weather', weather)
     return init_app
 
 
