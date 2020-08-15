@@ -5,7 +5,10 @@ import aiohttp_jinja2
 import jinja2
 from aiohttp import web
 
-from views import homepage
+
+@aiohttp_jinja2.template('homepage.html')
+async def homepage(request):
+    return {}
 
 
 async def initial_app():
@@ -19,4 +22,4 @@ if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     app = loop.run_until_complete(initial_app())
     logging.basicConfig(level=logging.DEBUG)
-    web.run_app(app, port=8181)
+    web.run_app(app, port=8080)
