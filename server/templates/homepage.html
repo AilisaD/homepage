@@ -89,16 +89,16 @@
     <div id="map" class="map"></div>
     <script>
         function showTime(){
-            var date = new Date();
-            var h = date.getHours(); // 0 - 23
-            var m = date.getMinutes(); // 0 - 59
-            var s = date.getSeconds(); // 0 - 59
+            let date = new Date();
+            let h = date.getHours(); // 0 - 23
+            let m = date.getMinutes(); // 0 - 59
+            let s = date.getSeconds(); // 0 - 59
 
             h = (h < 10) ? "0" + h : h;
             m = (m < 10) ? "0" + m : m;
             s = (s < 10) ? "0" + s : s;
 
-            var time = h + ":" + m + ":" + s;
+            let time = h + ":" + m + ":" + s;
             document.getElementById("Clock").innerText = time;
             document.getElementById("Clock").textContent = time;
 
@@ -109,17 +109,17 @@
     </script>
     <script>
         function showDate(){
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth() + 1;
-
+            let date = new Date();
+            let d = date.getDate();
+            let m = date.getMonth() + 1;
             d = (d < 10) ? "0" + d : d;
             m = (m < 10) ? "0" + m : m;
-            var dd = d + "." + m;
+            let dd = d + "." + m;
             document.getElementById("Date").innerText = dd;
             document.getElementById("Date").textContent = dd;
-
-            setTimeout(showDate, 1000*60*60*24);
+            let date_next = new Date(date.getFullYear(), m-1, d+1, 0, 0, 0);
+            let diff = date_next - date;
+            setTimeout(showDate, diff);
         }
 
         showDate();
