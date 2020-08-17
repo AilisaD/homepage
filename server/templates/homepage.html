@@ -134,7 +134,6 @@
     <script>
         let timestamps = [];
         let radarLayers = [];
-
         let animationPosition = 0;
 
         function getNewTime(){
@@ -146,6 +145,8 @@
             apiRequest.open("GET", "https://api.rainviewer.com/public/maps.json", f);
             apiRequest.onload = function(e) {
                 timestamps = JSON.parse(apiRequest.response);
+                radarLayers = [];
+                animationPosition = 0;
             };
             apiRequest.send();
             setTimeout(getNewTime, 1000*60*10);
