@@ -136,7 +136,6 @@
         let radarLayers = [];
 
         let animationPosition = 0;
-        let animationTimer = false;
 
         function getNewTime(){
             let f = true;
@@ -155,7 +154,7 @@
         getNewTime();
         if (timestamps.length !== 0){
             showFrame(-1);
-            playStop();
+            play();
         }
 
         function addLayer(ts) {
@@ -210,28 +209,14 @@
             changeRadarPosition(nextPosition + preloadingDirection, true);
         }
 
-        function stop() {
-            if (animationTimer) {
-                clearTimeout(animationTimer);
-                animationTimer = false;
-                return true;
-            }
-            return false;
-        }
-
         function play() {
             showFrame(animationPosition + 1);
             let elem = document.getElementById("load");
             let p = (animationPosition * 7.69) + 7.69;
             elem.style.width = p + '%';
-            animationTimer = setTimeout(play, 500);
+            setTimeout(play, 500);
         }
 
-        function playStop() {
-            if (!stop()) {
-                play();
-            }
-        }
     </script>
 </body>
 </html>
