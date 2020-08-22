@@ -135,30 +135,35 @@
         let timestamps = [];
         let radarLayers = [];
         let animationPosition = 0;
+        let removeZeroLayer = 0;
 
         function getNewTime(){
             let f = true;
             if(timestamps.length === 0){
                 f = false;
             }
+            else{
+                removeZeroLayer = timestamps[0];
+            }
             let apiRequest = new XMLHttpRequest();
             apiRequest.open("GET", "https://api.rainviewer.com/public/maps.json", f);
             apiRequest.onload = function(e) {
                 timestamps = JSON.parse(apiRequest.response);
-                radarLayers = [];
-                animationPosition = 0;
             };
             apiRequest.send();
             setTimeout(getNewTime, 1000*60*10);
 
         }
         getNewTime();
-        if (timestamps.length !== 0){
-            showFrame(-1);
+        if (timestamps.length !== 0)
+        {
             play();
         }
 
         function addLayer(ts) {
+            if (removeZeroLayer !== 0){
+                map.removeLayer(radarLayers[removeZeroLayer]);
+            }
             if (!radarLayers[ts]) {
                 let layers = 'https://tilecache.rainviewer.com/v2/radar/' + ts + '/256/{z}/{x}/{y}/8/1_1.png';
                 radarLayers[ts] = new L.TileLayer(layers, {
@@ -188,20 +193,20 @@
             if (preloadOnly) {
                 return;
             }
-
             animationPosition = position;
 
             if (radarLayers[currentTimestamp]) {
                 radarLayers[currentTimestamp].setOpacity(0);
             }
             radarLayers[nextTimestamp].setOpacity(100);
-            let logDate = new Date(nextTimestamp*1000);
-            let h = logDate.getHours();
-            let m = logDate.getMinutes();
 
-            h = (h < 10) ? "0" + h : h;
-            m = (m < 10) ? "0" + m : m;
-            document.getElementById("timestamp").innerHTML = h + ":" + m;
+            // let logDate = new Date(nextTimestamp*1000);
+            // let h = logDate.getHours();
+            // let m = logDate.getMinutes();
+            //
+            // h = (h < 10) ? "0" + h : h;
+            // m = (m < 10) ? "0" + m : m;
+            // document.getElementById("timestamp").innerHTML = h + ":" + m;
         }
 
         function showFrame(nextPosition) {
