@@ -15,6 +15,7 @@ async def initial_app():
     init_app = web.Application()
     aiohttp_jinja2.setup(init_app, loader=jinja2.FileSystemLoader("templates"))
     init_app.router.add_get("/", homepage)
+    init_app.router.add_static('/static', 'templates/static')
     return init_app
 
 

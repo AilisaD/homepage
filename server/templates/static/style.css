@@ -1,0 +1,65 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: rgba(255, 161, 20, 1);
+    font-family: 'Play', sans-serif;
+    text-shadow: 0 0 20px black;
+    font-weight: bold;
+}
+.leaflet-container{
+    background: black;
+}
+.leaflet-pane{
+    position: static ;
+}
+.leaflet-control-attribution{
+    visibility: hidden;
+}
+
+#timestamp{
+    text-align:center;
+    position: absolute;
+    bottom: 0;
+    left: 1%;
+    pointer-events: none;
+
+
+    z-index: 2;
+}
+#load{
+    position: absolute;
+    bottom: 0;
+
+    width: 0;
+    height: 20px;
+    background-color: rgba(255, 161, 20, 0.35);
+
+
+    z-index: 2;
+}
+.map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.time{
+    transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    letter-spacing: 5px;
+    pointer-events: none;
+    z-index: 2;
+}
+.clock {
+    font-size: 200px;
+
+}
+.date {
+    transform: translateX(25%);
+    font-size: 150px;
+}
