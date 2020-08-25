@@ -71,14 +71,6 @@ function changeRadarPosition(position, preloadOnly) {
         radarLayers[currentTimestamp].setOpacity(0);
     }
     radarLayers[nextTimestamp].setOpacity(100);
-
-    let logDate = new Date(nextTimestamp*1000);
-    let h = logDate.getHours();
-    let m = logDate.getMinutes();
-
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    document.getElementById("timestamp").innerHTML = h + ":" + m;
 }
 
 function showFrame(nextPosition) {
