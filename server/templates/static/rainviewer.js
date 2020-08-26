@@ -71,6 +71,10 @@ function changeRadarPosition(position, preloadOnly) {
         radarLayers[currentTimestamp].setOpacity(0);
     }
     radarLayers[nextTimestamp].setOpacity(100);
+
+    let logDate = new Date(nextTimestamp*1000);
+    let h = logDate.getHours();
+    let m = logDate.getMinutes();
 }
 
 function showFrame(nextPosition) {
@@ -84,7 +88,13 @@ function play() {
     let elem = document.getElementById("load");
     let p = (animationPosition * 7.69) + 7.69;
     elem.style.width = p + '%';
-    setTimeout(play, 500);
+    let timeout = 500;
+    if (animationPosition === timestamps.length-1)
+    {
+        timeout += 4500;
+    }
+
+    setTimeout(play, timeout);
 }
 
 
