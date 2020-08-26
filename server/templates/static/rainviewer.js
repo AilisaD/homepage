@@ -92,7 +92,14 @@ function play() {
     let elem = document.getElementById("load");
     let p = (animationPosition * 7.69) + 7.69;
     elem.style.width = p + '%';
-    setTimeout(play, 500);
+    console.log(animationPosition);
+    let timeout = 500;
+    if (animationPosition === timestamps.length-1)
+    {
+        timeout += 4500;
+    }
+
+    setTimeout(play, timeout);
 }
 
 
