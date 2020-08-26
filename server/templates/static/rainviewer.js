@@ -75,10 +75,6 @@ function changeRadarPosition(position, preloadOnly) {
     let logDate = new Date(nextTimestamp*1000);
     let h = logDate.getHours();
     let m = logDate.getMinutes();
-
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    document.getElementById("timestamp").innerHTML = h + ":" + m;
 }
 
 function showFrame(nextPosition) {
@@ -92,7 +88,6 @@ function play() {
     let elem = document.getElementById("load");
     let p = (animationPosition * 7.69) + 7.69;
     elem.style.width = p + '%';
-    console.log(animationPosition);
     let timeout = 500;
     if (animationPosition === timestamps.length-1)
     {
