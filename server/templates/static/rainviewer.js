@@ -27,10 +27,13 @@ function getNewTime(){
 
 }
 getNewTime();
+
+
 if (timestamps.length !== 0)
 {
     play();
 }
+
 
 function addLayer(ts) {
     if (removeZeroLayer !== 0){
@@ -71,10 +74,6 @@ function changeRadarPosition(position, preloadOnly) {
         radarLayers[currentTimestamp].setOpacity(0);
     }
     radarLayers[nextTimestamp].setOpacity(100);
-
-    let logDate = new Date(nextTimestamp*1000);
-    let h = logDate.getHours();
-    let m = logDate.getMinutes();
 }
 
 function showFrame(nextPosition) {
@@ -85,16 +84,39 @@ function showFrame(nextPosition) {
 
 function play() {
     showFrame(animationPosition + 1);
-    let elem = document.getElementById("load");
-    let p = (animationPosition * 7.69) + 7.69;
-    elem.style.width = p + '%';
+    // let elem = document.getElementById("load");
+    // let p = (animationPosition * 7.69) + 7.69;
+    // elem.style.width = p + '%';
     let timeout = 500;
+
     if (animationPosition === timestamps.length-1)
     {
         timeout += 4500;
     }
-
+    move();
     setTimeout(play, timeout);
 }
+
+var i = 0;
+function move() {
+    if (i === 0) {
+        i = 1;
+        let elem = document.getElementById("load");
+        let width = 1;
+        let id = setInterval(frame, 63.8);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(id);
+                i = 0;
+            } else {
+                width++;
+                elem.style.width = width + "%";
+            }
+        }
+    }
+}
+
+
+
 
 

@@ -22,14 +22,12 @@ body, html {
 #load{
     position: absolute;
     bottom: 0;
-
-    width: 0;
+    width: 1%;
     height: 20px;
     background-color: rgba(255, 161, 20, 0.35);
-
-
     z-index: 2;
 }
+
 .map {
     position: absolute;
     width: 100%;
@@ -53,3 +51,4 @@ body, html {
     transform: translateX(25%);
     font-size: 150px;
 }
+
