@@ -59,7 +59,7 @@ def get_weather():
     if weather['fact']['temp'] > 0:
         temperature = '+' + str(temperature)
     condition = dict_weather[weather['fact']['condition']]
-    print(time, temperature, condition)
+    # print(time, temperature, condition)
 
 
 if __name__ == "__main__":
