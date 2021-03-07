@@ -84,11 +84,7 @@ function showFrame(nextPosition) {
 
 function play() {
     showFrame(animationPosition + 1);
-    // let elem = document.getElementById("load");
-    // let p = (animationPosition * 7.69) + 7.69;
-    // elem.style.width = p + '%';
     let timeout = 500;
-
     if (animationPosition === timestamps.length-1)
     {
         timeout += 4500;

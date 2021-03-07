@@ -5,6 +5,9 @@ services:
     build:
       context: ""
       dockerfile: server/Dockerfile
+    environment:
+      - API_token=${API_token}
     ports:
       - "8080:8080"
     command: bash -c 'python3 server.py'
+

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
     <script src="https://cdn.maptiler.com/mapbox-gl-js/v1.5.1/mapbox-gl.js"></script>
     <script src="https://cdn.maptiler.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
@@ -9,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="static/style.css" />
+
+
 </head>
 
 <body>
@@ -21,22 +24,15 @@
     <div id="load"></div>
 
     <div id="map" class="map"></div>
-<!--    <script>-->
-<!--        try {-->
-<!--            var xhttp = new XMLHttpRequest();-->
-<!--            xhttp.open('GET', 'https://api.weather.yandex.ru/v1/informers?lat=55.81370&lon=37.36522', false);-->
-<!--            xhttp.setRequestHeader('Content-type', 'text/html', 'X-Yandex-API-Key: b93b02b0-da03-4600-9a9c-d396d249fd5b');-->
-<!--            xhttp.send();-->
-<!--            var response = JSON.parse(xhttp.response);-->
-<!--            console.log(xhttp.response);-->
-<!--        }-->
-<!--        catch (error) {-->
-<!--            console.log(error.message);-->
-<!--        }-->
+    <div class="weather">
+        <label id="temp"></label>&#176; <label id="temp_like"></label> <label id="cond"></label>
+        <div id="forecast">
+        </div>
+    </div>
 
-<!--    </script>-->
 </body>
 <script src="static/rainviewer.js"></script>
 <script src="static/time.js"></script>
 <script src="static/date.js"></script>
+<script src="static/weather.js"></script>
 </html>

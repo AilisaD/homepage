@@ -52,3 +52,22 @@ body, html {
     font-size: 150px;
 }
 
+.weather{
+    position: relative;
+    font-weight: lighter;
+    padding: 10px;
+    float:right;
+    text-align: right;
+    font-size: 50px;
+    letter-spacing: 1px;
+    width: auto;
+    height: auto;
+    z-index: 2;
+    color: rgb(229, 170, 102);
+}
+#forecast{
+    font-size: 20px;
+}
+#temp_like{
+    color: rgb(157, 112, 50);
+}
