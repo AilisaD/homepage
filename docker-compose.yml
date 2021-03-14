@@ -2,6 +2,8 @@ version: '3'
 
 services:
   server:
+    container_name: homepage
+    restart: always
     build:
       context: ""
       dockerfile: server/Dockerfile

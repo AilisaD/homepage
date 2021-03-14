@@ -66,14 +66,90 @@ async def initial_app():
 
 
 async def get_weather():
-    """https://api.weather.yandex.ru/v1/informers?lat=55.81370&lon=37.36522"""
-    response = requests.get(
+    response = requests.get(  # aiohttp client
         "https://api.weather.yandex.ru/v1/informers?lat=55.81370&lon=37.36522",
         headers={
             'Content-type': 'text/html',
             'X-Yandex-API-Key': os.getenv('API_token')},
     )
     weather_res = json.loads(response.text)
+
+    # weather_res = {
+    #     "now": 1615123427,
+    #     "now_dt": "2021-03-07T13:23:47.115383Z",
+    #     "info": {
+    #         "url": "https://yandex.ru/pogoda/10735?lat=55.8137&lon=37.36522",
+    #         "lat": 55.8137,
+    #         "lon": 37.36522,
+    #     },
+    #     "fact": {
+    #         "obs_time": 1615122000,
+    #         "temp": -3,
+    #         "feels_like": -9,
+    #         "icon": "ovc",
+    #         "condition": "overcast",
+    #         "wind_speed": 4.6,
+    #         "wind_dir": "w",
+    #         "pressure_mm": 730,
+    #         "pressure_pa": 973,
+    #         "humidity": 83,
+    #         "daytime": "d",
+    #         "polar": False,
+    #         "season": "spring",
+    #         "wind_gust": 10.1,
+    #     },
+    #     "forecast": {
+    #         "date": "2021-03-07",
+    #         "date_ts": 1615064400,
+    #         "week": 9,
+    #         "sunrise": "07:06",
+    #         "sunset": "18:16",
+    #         "moon_code": 5,
+    #         "moon_text": "decreasing-moon",
+    #         "parts": [
+    #             {
+    #                 "part_name": "evening",
+    #                 "temp_min": -5,
+    #                 "temp_avg": -4,
+    #                 "temp_max": -3,
+    #                 "wind_speed": 3.4,
+    #                 "wind_gust": 9.8,
+    #                 "wind_dir": "w",
+    #                 "pressure_mm": 731,
+    #                 "pressure_pa": 975,
+    #                 "humidity": 81,
+    #                 "prec_mm": 1.5,
+    #                 "prec_prob": 80,
+    #                 "prec_period": 360,
+    #                 "icon": "bkn_+sn_n",
+    #                 "condition": "overcast-and-snow",
+    #                 "feels_like": -9,
+    #                 "daytime": "n",
+    #                 "polar": False,
+    #             },
+    #             {
+    #                 "part_name": "night",
+    #                 "temp_min": -7,
+    #                 "temp_avg": -6,
+    #                 "temp_max": -6,
+    #                 "wind_speed": 3.9,
+    #                 "wind_gust": 8.7,
+    #                 "wind_dir": "w",
+    #                 "pressure_mm": 731,
+    #                 "pressure_pa": 975,
+    #                 "humidity": 82,
+    #                 "prec_mm": 0.3,
+    #                 "prec_prob": 60,
+    #                 "prec_period": 360,
+    #                 "icon": "bkn_-sn_n",
+    #                 "condition": "overcast-and-light-snow",
+    #                 "feels_like": -12,
+    #                 "daytime": "n",
+    #                 "polar": False,
+    #             },
+    #         ],
+    #     },
+    # }
     logging.info("get_weather")
     time = dt.fromtimestamp(weather_res["fact"]["obs_time"]).strftime("%H:%M")
     temperature = weather_res["fact"]["temp"]

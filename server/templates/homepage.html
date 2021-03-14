@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
     <link rel="stylesheet" href="https://cdn.maptiler.com/mapbox-gl-js/v1.5.1/mapbox-gl.css" />
     <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
 
 </head>
@@ -22,13 +22,27 @@
     </div>
 
     <div id="load"></div>
-
+    <div class="shadow"></div>
+    <div class="shadow_two"></div>
     <div id="map" class="map"></div>
     <div class="weather">
-        <label id="temp"></label>&#176; <label id="temp_like"></label> <label id="cond"></label>
-        <div id="forecast">
+            <div>
+                <img id="img" class="icon">
+                <label id="temp"></label>&#176; <label id="temp_like"></label>
+                <label id="cond"></label>
+            </div>
+            <div id="forecast">
+                <div class="div_part">
+                    <img id="img_part_one" class="icon_mini">
+                    <label id="part_one"></label>
+                </div>
+                <div class="div_part">
+                    <img id="img_part_two" class="icon_mini">
+                    <label id="part_two"></label>
+                </div>
+            </div>
         </div>
-    </div>
+
 
 </body>
 <script src="static/rainviewer.js"></script>
