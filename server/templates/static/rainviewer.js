@@ -1,6 +1,6 @@
 let map = L.map('map', { zoomControl: false }).setView([55.81370, 37.36522], 6);
 let gl = L.mapboxGL({
-    style: 'https://api.maptiler.com/maps/e9344f37-0d92-4f4b-99de-5d7a038c5620/style.json?key=auHeH62VVMXfIVFOMESZ',
+    style: 'https://api.maptiler.com/maps/35d9173d-5587-4156-a635-57776a4c15f6/style.json?key=auHeH62VVMXfIVFOMESZ',
     zoomControl: false
 }).addTo(map);
 
