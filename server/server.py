@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import os
 
@@ -10,6 +9,7 @@ import requests
 import json
 from datetime import datetime as dt
 
+logging.basicConfig(level=logging.DEBUG)
 
 dict_weather = {
     "clear": "ясно",
@@ -56,7 +56,7 @@ async def weather(request):
     return web.json_response({"fact": fact, "forecast": forecast})
 
 
-async def initial_app():
+def initial_app():
     init_app = web.Application()
     aiohttp_jinja2.setup(init_app, loader=jinja2.FileSystemLoader("templates"))
     init_app.router.add_get("/", homepage)
@@ -183,8 +183,4 @@ async def get_weather():
     return fact, forecast
 
 
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    app = loop.run_until_complete(initial_app())
-    logging.basicConfig(level=logging.DEBUG)
-    web.run_app(app, port=8080)
+app = initial_app()
